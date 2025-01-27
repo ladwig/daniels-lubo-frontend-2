@@ -258,103 +258,101 @@ export default function Documentation() {
   return (
     <div>
       <ProjectHeader projectId="PM123-P48132" />
-      <PageContainer>
-        <div className="flex-1 flex flex-col min-h-0">
-          {/* Job Tabs */}
-          <div className="border-b">
-            <div className="flex gap-1 px-1">
-              {jobs.map((job) => (
-                <button
-                  key={job.id}
-                  onClick={() => setSelectedJob(job.id)}
-                  className={cn(
-                    "px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors relative group",
-                    selectedJob === job.id
-                      ? "border-primary text-gray-900"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                  )}
-                >
-                  <div className="flex items-center gap-2">
-                    {job.title}
-                    <div 
-                      className={cn(
-                        "w-2 h-2 rounded-full",
-                        getStatusColor(job.status)
-                      )}
-                      title={getStatusTitle(job.status)}
-                    />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Documentation Table */}
-          <div className="flex-1 overflow-auto">
-            <table className="w-full">
-              <thead className="sticky top-0 z-10">
-                <tr className="border-b bg-gray-50">
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[150px]">Job-Schritt</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[300px]">Aufgabe</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Wert</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {currentJob?.documentationSteps.map((step) => (
-                  <tr key={step.id} className="group relative">
-                    <td className="py-3 px-4 text-sm text-gray-600">
-                      {step.chapter}
-                    </td>
-                    <td className="py-3 px-4 text-sm text-gray-600 relative">
-                      <div className="group/task cursor-help">
-                        {step.task}
-                        <div className="invisible group-hover/task:visible absolute left-0 top-full mt-2 p-2 bg-gray-900 text-white text-xs rounded-md w-[300px] z-50 shadow-lg">
-                          {step.description}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      {step.type === 'text' ? (
-                        <span className="text-sm text-gray-600">
-                          {step.value || (
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-gray-400 italic">Ausstehend</span>
-                              <AlertCircle 
-                                className="h-4 w-4 text-amber-500 flex-shrink-0" 
-                                aria-label="Dokumentation ausstehend"
-                              />
-                            </div>
-                          )}
-                        </span>
-                      ) : (
-                        <div className="flex gap-2 flex-wrap">
-                          {Array.isArray(step.value) && step.value.length > 0 ? (
-                            step.value.map((image, index) => (
-                              <div key={index} className="relative w-24 h-24 border rounded-md overflow-hidden bg-gray-50">
-                                <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                                  Bild {step.value.length > 1 ? index + 1 : ''}
-                                </div>
-                              </div>
-                            ))
-                          ) : (
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-sm text-gray-400 italic">Fotos ausstehend</span>
-                              <AlertCircle 
-                                className="h-4 w-4 text-amber-500 flex-shrink-0" 
-                                aria-label="Dokumentation ausstehend"
-                              />
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <div className="p-6 flex-1 flex flex-col min-h-0 gap-4">
+        {/* Job Tabs Card */}
+        <div className="bg-white border rounded-lg">
+          <div className="flex border-b">
+            {jobs.map((job) => (
+              <button
+                key={job.id}
+                onClick={() => setSelectedJob(job.id)}
+                className={cn(
+                  "px-4 py-2 text-sm font-medium border-b-2 -mb-px transition-colors relative group",
+                  selectedJob === job.id
+                    ? "border-primary text-gray-900"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  {job.title}
+                  <div 
+                    className={cn(
+                      "w-2 h-2 rounded-full",
+                      getStatusColor(job.status)
+                    )}
+                    title={getStatusTitle(job.status)}
+                  />
+                </div>
+              </button>
+            ))}
           </div>
         </div>
-      </PageContainer>
+
+        {/* Documentation Table */}
+        <div className="flex-1 overflow-auto bg-white border rounded-lg">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b">
+                <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[150px]">Job-Schritt</th>
+                <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[300px]">Aufgabe</th>
+                <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Wert</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {currentJob?.documentationSteps.map((step) => (
+                <tr key={step.id} className="group relative">
+                  <td className="py-3 px-4 text-sm text-gray-600">
+                    {step.chapter}
+                  </td>
+                  <td className="py-3 px-4 text-sm text-gray-600 relative">
+                    <div className="group/task cursor-help">
+                      {step.task}
+                      <div className="invisible group-hover/task:visible absolute left-0 top-full mt-2 p-2 bg-gray-900 text-white text-xs rounded-md w-[300px] z-50 shadow-lg">
+                        {step.description}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="py-3 px-4">
+                    {step.type === 'text' ? (
+                      <span className="text-sm text-gray-600">
+                        {step.value || (
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-gray-400 italic">Ausstehend</span>
+                            <AlertCircle 
+                              className="h-4 w-4 text-amber-500 flex-shrink-0" 
+                              aria-label="Dokumentation ausstehend"
+                            />
+                          </div>
+                        )}
+                      </span>
+                    ) : (
+                      <div className="flex gap-2 flex-wrap">
+                        {Array.isArray(step.value) && step.value.length > 0 ? (
+                          step.value.map((image, index) => (
+                            <div key={index} className="relative w-24 h-24 border rounded-md overflow-hidden bg-gray-50">
+                              <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                                Bild {step.value.length > 1 ? index + 1 : ''}
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-sm text-gray-400 italic">Fotos ausstehend</span>
+                            <AlertCircle 
+                              className="h-4 w-4 text-amber-500 flex-shrink-0" 
+                              aria-label="Dokumentation ausstehend"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 } 
