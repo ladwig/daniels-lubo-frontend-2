@@ -39,21 +39,21 @@ export default function GlobalSearch() {
   const hasResults = Object.values(filteredResults).some(category => category.length > 0);
 
   return (
-    <div className="relative">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-        <input
-          type="text"
-          placeholder="Globale Suche..."
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setIsOpen(true);
-          }}
-          onFocus={() => setIsOpen(true)}
-          className="w-[500px] pl-9 pr-4 py-2 bg-white/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-        />
+    <div className="relative w-96">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <Search className="h-4 w-4 text-gray-400" />
       </div>
+      <input
+        type="text"
+        placeholder="Globale Suche..."
+        value={searchTerm}
+        onChange={(e) => {
+          setSearchTerm(e.target.value);
+          setIsOpen(true);
+        }}
+        onFocus={() => setIsOpen(true)}
+        className="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 border rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+      />
 
       {/* Results dropdown */}
       {isOpen && searchTerm && (
