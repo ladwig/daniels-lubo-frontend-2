@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import {
   LayoutDashboard,
@@ -50,15 +50,24 @@ const navItems = [
 
 interface SidebarProps {
   onCollapse?: (collapsed: boolean) => void;
+  isCollapsed?: boolean;
 }
 
-export default function Sidebar({ onCollapse }: SidebarProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export default function Sidebar({ onCollapse, isCollapsed: propIsCollapsed }: SidebarProps) {
+  const [isCollapsed, setIsCollapsed] = useState(propIsCollapsed || false);
   const pathname = usePathname();
 
+  // Update internal state when prop changes
+  useEffect(() => {
+    if (propIsCollapsed !== undefined) {
+      setIsCollapsed(propIsCollapsed);
+    }
+  }, [propIsCollapsed]);
+
   const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-    onCollapse?.(!isCollapsed);
+    const newCollapsed = !isCollapsed;
+    setIsCollapsed(newCollapsed);
+    onCollapse?.(newCollapsed);
   };
 
   return (

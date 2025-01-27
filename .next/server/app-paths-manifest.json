@@ -1,10 +1,7 @@
 {
-  "/not-found": "app/not-found.js",
   "/projects/page": "app/projects/page.js",
-  "/projects/documentation/page": "app/projects/documentation/page.js",
   "/management/articles/page": "app/management/articles/page.js",
   "/management/templates/page": "app/management/templates/page.js",
-  "/management/templates/new/page": "app/management/templates/new/page.js",
   "/projects/[id]/page": "app/projects/[id]/page.js",
   "/projects/[id]/add-job/page": "app/projects/[id]/add-job/page.js"
 }

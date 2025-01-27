@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bell, ChevronDown } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 import Breadcrumbs from "@/components/breadcrumbs";
@@ -14,10 +14,35 @@ export default function ProjectsLayout({
 }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSidebarCollapsed(window.innerWidth < 1200);
+    };
+
+    // Set initial state
+    handleResize();
+
+    // Throttle the resize event to prevent too many updates
+    let timeoutId: NodeJS.Timeout;
+    const throttledResize = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleResize, 100);
+    };
+
+    window.addEventListener('resize', throttledResize);
+    return () => {
+      window.removeEventListener('resize', throttledResize);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <Sidebar onCollapse={setIsSidebarCollapsed} />
+      <Sidebar 
+        isCollapsed={isSidebarCollapsed} 
+        onCollapse={setIsSidebarCollapsed} 
+      />
 
       {/* Main Content */}
       <div className={cn(
