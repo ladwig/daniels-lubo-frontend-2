@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Hash, MapPin, ExternalLink, Users, MessageSquare, Tag } from 'lucide-react';
+import { Hash, MapPin, ExternalLink, Users, MessageSquare, Tag, Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ChatPanel from './chat-panel';
 
@@ -84,26 +84,29 @@ export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
                   <Tag className="h-4 w-4" />
                   <span>{projectInfo.category}</span>
                 </div>
-                <div className="flex items-center gap-3 ml-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <a
+                    href="tel:+491234567890"
+                    className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900"
+                  >
+                    <Phone className="h-3 w-3" />
+                    Anrufen
+                  </a>
                   <a
                     href={projectInfo.businessCentralUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-0.5 text-gray-500 hover:text-primary transition-colors"
-                    title="Open in Business Central"
+                    className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900"
                   >
-                    <span>BC</span>
-                    <ExternalLink className="h-3 w-3" />
+                    BC <ExternalLink className="h-3 w-3" />
                   </a>
                   <a
                     href={projectInfo.hubspotUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-0.5 text-gray-500 hover:text-primary transition-colors"
-                    title="Open in HubSpot"
+                    className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900"
                   >
-                    <span>HS</span>
-                    <ExternalLink className="h-3 w-3" />
+                    HS <ExternalLink className="h-3 w-3" />
                   </a>
                 </div>
               </div>
