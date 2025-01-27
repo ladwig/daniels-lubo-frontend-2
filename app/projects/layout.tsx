@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Bell, ChevronDown, FileText, LogOut } from "lucide-react";
+import { Bell, ChevronDown, FileText, LogOut, Moon, Sun } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 import Breadcrumbs from "@/components/breadcrumbs";
 import GlobalSearch from "@/components/global-search";
@@ -15,6 +15,7 @@ export default function ProjectsLayout({
 }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -85,6 +86,19 @@ export default function ProjectsLayout({
                       <FileText className="h-4 w-4" />
                       API Dokumentation
                     </Link>
+                    <button
+                      onClick={() => setIsDarkMode(!isDarkMode)}
+                      className="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    >
+                      <div className="flex items-center gap-2">
+                        {isDarkMode ? (
+                          <Moon className="h-4 w-4" />
+                        ) : (
+                          <Sun className="h-4 w-4" />
+                        )}
+                        {isDarkMode ? "Dark Mode" : "Light Mode"}
+                      </div>
+                    </button>
                     <button
                       onClick={() => {
                         // Handle logout

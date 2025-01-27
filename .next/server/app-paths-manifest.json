@@ -1,8 +1,7 @@
 {
-  "/projects/page": "app/projects/page.js",
-  "/management/articles/page": "app/management/articles/page.js",
   "/projects/planning/page": "app/projects/planning/page.js",
+  "/management/articles/page": "app/management/articles/page.js",
   "/management/templates/page": "app/management/templates/page.js",
-  "/projects/[id]/page": "app/projects/[id]/page.js",
-  "/projects/[id]/add-job/page": "app/projects/[id]/add-job/page.js"
+  "/projects/page": "app/projects/page.js",
+  "/projects/[id]/page": "app/projects/[id]/page.js"
 }
