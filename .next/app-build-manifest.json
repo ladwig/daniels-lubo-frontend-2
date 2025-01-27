@@ -61,10 +61,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/projects/[id]/add-job/page.js"
     ],
-    "/not-found": [
+    "/management/templates/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/chunks/app/management/templates/page.js"
+    ],
+    "/management/templates/new/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/management/templates/new/page.js"
     ]
   }
 }
