@@ -22,6 +22,8 @@ interface Job {
   title: string;
   status: 'completed' | 'in_progress' | 'not_started';
   documentationSteps: DocumentationStep[];
+  employees?: { id: string; name: string }[];
+  appointments?: { id: string; date: string }[];
 }
 
 // Mock data for different jobs
@@ -30,6 +32,14 @@ const jobs: Job[] = [
     id: "SHK",
     title: "SHK Installation",
     status: 'in_progress',
+    employees: [
+      { id: "1", name: "Max Mustermann" },
+      { id: "2", name: "John Doe" }
+    ],
+    appointments: [
+      { id: "1", date: "2024-03-15" },
+      { id: "2", date: "2024-03-20" }
+    ],
     documentationSteps: [
       {
         id: 1,
@@ -155,6 +165,12 @@ const jobs: Job[] = [
     id: "ELEKTRO",
     title: "Elektroinstallation",
     status: 'completed',
+    employees: [
+      { id: "3", name: "Jane Smith" }
+    ],
+    appointments: [
+      { id: "3", date: "2024-03-18" }
+    ],
     documentationSteps: [
       {
         id: 1,
@@ -255,12 +271,22 @@ export default function Documentation() {
     return Array.isArray(step.value) && step.value.length === 0;
   };
 
+  const areAllStepsFilled = (steps: DocumentationStep[]) => {
+    return steps.every(step => {
+      if (step.type === 'text') {
+        return !!step.value;
+      }
+      return Array.isArray(step.value) && step.value.length > 0;
+    });
+  };
+
   return (
     <>
       <ProjectHeader projectId="PM123-P48132" />
-      <div className="p-6">
-        {/* Job Tabs Card */}
+      <div className="p-6 space-y-4">
+        {/* Job Tabs and Info */}
         <div className="bg-white border rounded-lg">
+          {/* Tabs */}
           <div className="flex border-b">
             {jobs.map((job) => (
               <button
@@ -286,10 +312,57 @@ export default function Documentation() {
               </button>
             ))}
           </div>
+
+          {/* Job Info Section */}
+          {currentJob && (
+            <div className="px-4 py-3 border-b flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">Mitarbeiter:</span>
+                  <div className="flex gap-1">
+                    {currentJob.employees?.map(employee => (
+                      <span
+                        key={employee.id}
+                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700"
+                      >
+                        {employee.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-500">Termine:</span>
+                  <div className="flex gap-1">
+                    {currentJob.appointments?.map(appointment => (
+                      <a
+                        key={appointment.id}
+                        href="#"
+                        className="text-xs text-primary hover:underline"
+                      >
+                        {new Date(appointment.date).toLocaleDateString('de-DE')}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <button
+                className={cn(
+                  "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+                  areAllStepsFilled(currentJob.documentationSteps)
+                    ? "text-white bg-primary hover:bg-primary/90"
+                    : "text-gray-400 bg-gray-100 cursor-not-allowed"
+                )}
+                disabled={!areAllStepsFilled(currentJob.documentationSteps)}
+                title={!areAllStepsFilled(currentJob.documentationSteps) ? "Bitte füllen Sie zuerst alle Dokumentationsschritte aus" : undefined}
+              >
+                Protokoll generieren
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Documentation Table */}
-        <div className="bg-white border rounded-lg mt-4">
+        <div className="bg-white border rounded-lg">
           <table className="w-full">
             <thead>
               <tr className="border-b">

@@ -2,20 +2,34 @@
 
 import React from 'react';
 import { Hash, MapPin, ExternalLink, Users } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-// This would typically come from an API
-const getProjectInfo = (projectId: string) => {
-  // Mock data - in real app, this would fetch from API
+// Add category to the interface
+interface ProjectInfo {
+  customerName: string;
+  projectNumber: string;
+  address: string;
+  partner: string;
+  status: string;
+  businessCentralUrl: string;
+  hubspotUrl: string;
+  category: 'A' | 'B' | 'C' | 'D';
+}
+
+// Update the mock data function
+function getProjectInfo(projectId: string): ProjectInfo {
+  // Mock data
   return {
-    customerName: "Familie Schmidt",
+    customerName: "Familie Mustermann",
     projectNumber: projectId,
-    address: "Domkloster 4, 50667 Köln",
-    status: "In Progress",
-    partner: "1komma5",
-    businessCentralUrl: "https://businesscentral.dynamics.com/...",
-    hubspotUrl: "https://app.hubspot.com/...",
+    address: "Musterstraße 123, 12345 Musterstadt",
+    partner: "Musterfirma GmbH",
+    status: "In Bearbeitung",
+    businessCentralUrl: "https://business-central.example.com",
+    hubspotUrl: "https://hubspot.example.com",
+    category: 'B'
   };
-};
+}
 
 interface ProjectHeaderProps {
   projectId: string;
@@ -23,6 +37,32 @@ interface ProjectHeaderProps {
 
 export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
   const projectInfo = getProjectInfo(projectId);
+
+  const getCategoryColor = (category: ProjectInfo['category']) => {
+    switch (category) {
+      case 'A':
+        return 'bg-red-50 text-red-700';
+      case 'B':
+        return 'bg-orange-50 text-orange-700';
+      case 'C':
+        return 'bg-yellow-50 text-yellow-700';
+      case 'D':
+        return 'bg-green-50 text-green-700';
+    }
+  };
+
+  const getCategoryTitle = (category: ProjectInfo['category']) => {
+    switch (category) {
+      case 'A':
+        return 'Höchste Komplexität';
+      case 'B':
+        return 'Hohe Komplexität';
+      case 'C':
+        return 'Mittlere Komplexität';
+      case 'D':
+        return 'Geringe Komplexität';
+    }
+  };
 
   return (
     <div className="bg-white border-b">
@@ -69,7 +109,16 @@ export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
               </div>
             </div>
           </div>
-          <div>
+          <div className="flex items-center gap-3">
+            <span 
+              className={cn(
+                "px-2.5 py-0.5 text-xs font-medium rounded-full",
+                getCategoryColor(projectInfo.category)
+              )}
+              title={getCategoryTitle(projectInfo.category)}
+            >
+              Kategorie {projectInfo.category}
+            </span>
             <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-primary/10 text-primary">
               {projectInfo.status}
             </span>

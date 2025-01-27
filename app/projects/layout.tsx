@@ -12,12 +12,12 @@ export default function ProjectsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ml-64">
+      <div className="flex-1 flex flex-col ml-64 bg-gray-50 min-h-screen">
         {/* Fixed Header Section */}
         <div className="sticky top-0 z-30 bg-white">
           {/* Main Header */}
@@ -45,7 +45,7 @@ export default function ProjectsLayout({
         </div>
 
         {/* Content */}
-        <div className="flex-1 bg-gray-50">
+        <div className="flex-1">
           {children}
         </div>
       </div>
