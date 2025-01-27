@@ -256,9 +256,9 @@ export default function Documentation() {
   };
 
   return (
-    <div>
+    <>
       <ProjectHeader projectId="PM123-P48132" />
-      <div className="p-6 flex-1 flex flex-col min-h-0 gap-4">
+      <div className="p-6">
         {/* Job Tabs Card */}
         <div className="bg-white border rounded-lg">
           <div className="flex border-b">
@@ -289,7 +289,7 @@ export default function Documentation() {
         </div>
 
         {/* Documentation Table */}
-        <div className="flex-1 overflow-auto bg-white border rounded-lg">
+        <div className="bg-white border rounded-lg mt-4">
           <table className="w-full">
             <thead>
               <tr className="border-b">
@@ -353,6 +353,6 @@ export default function Documentation() {
           </table>
         </div>
       </div>
-    </div>
+    </>
   );
 } 

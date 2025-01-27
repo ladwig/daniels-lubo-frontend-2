@@ -7,7 +7,7 @@ import { Hash, MapPin, ExternalLink, Users } from 'lucide-react';
 const getProjectInfo = (projectId: string) => {
   // Mock data - in real app, this would fetch from API
   return {
-    customerName: "Tech Demo GmbH",
+    customerName: "Familie Schmidt",
     projectNumber: projectId,
     address: "Domkloster 4, 50667 Köln",
     status: "In Progress",

@@ -55,12 +55,12 @@ export default function Sidebar() {
   return (
     <aside 
       className={cn(
-        "bg-white border-r flex flex-col transition-all duration-300 ease-in-out overflow-hidden",
+        "bg-white border-r flex flex-col fixed h-screen",
         isCollapsed ? "w-20" : "w-64"
       )}
     >
       {/* Logo/Header */}
-      <div className="h-16 border-b flex items-center px-6">
+      <div className="h-16 border-b flex items-center px-6 flex-shrink-0">
         <span className={cn(
           "text-lg font-medium text-primary transition-all duration-300 ease-in-out whitespace-nowrap",
           isCollapsed ? "opacity-0 -translate-x-4" : "opacity-100 translate-x-0"
@@ -70,7 +70,7 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 py-4">
+      <nav className="flex-1 py-4 overflow-y-auto">
         <ul className="px-3 space-y-6">
           {navItems.map((section) => (
             <li key={section.section} className="space-y-1">
