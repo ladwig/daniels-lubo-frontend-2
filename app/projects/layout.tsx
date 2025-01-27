@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Bell, ChevronDown, Search } from "lucide-react";
+import { Bell, ChevronDown } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 import Breadcrumbs from "@/components/breadcrumbs";
+import GlobalSearch from "@/components/global-search";
 
 export default function ProjectsLayout({
   children,
@@ -18,16 +19,9 @@ export default function ProjectsLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Main Header */}
-        <header className="h-16 border-b flex items-center justify-between px-6">
+        <header className="h-16 border-b flex items-center justify-between px-6 bg-white">
           <div className="flex-1 flex items-center">
-            <div className="relative w-96">
-              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full pl-8 pr-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
+            <GlobalSearch />
           </div>
           
           <div className="flex items-center gap-4">
@@ -48,7 +42,7 @@ export default function ProjectsLayout({
         </div>
 
         {/* Page Content */}
-        <div className="flex-1">
+        <div className="flex-1 bg-gray-50">
           {children}
         </div>
       </div>

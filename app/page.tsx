@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Bell, ChevronDown, Search } from "lucide-react";
+import { Bell, ChevronDown } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 import PageContainer from "@/components/page-container";
+import GlobalSearch from "@/components/global-search";
 
 export default function Home() {
   return (
@@ -16,14 +17,7 @@ export default function Home() {
         {/* Header */}
         <header className="h-16 border-b flex items-center justify-between px-6">
           <div className="flex-1 flex items-center">
-            <div className="relative w-96">
-              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full pl-8 pr-4 py-2 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
+            <GlobalSearch />
           </div>
           
           <div className="flex items-center gap-4">

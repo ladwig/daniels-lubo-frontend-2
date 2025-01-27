@@ -15,13 +15,16 @@ export default function PageContainer({
   className,
 }: PageContainerProps) {
   return (
-    <div className="flex-1 flex flex-col min-h-0">
-      <div className={cn("px-6 py-4 flex-1", className)}>
-        {title && (
-          <h1 className="text-xl font-medium text-gray-900 mb-4">
-            {title}
-          </h1>
-        )}
+    <div className="flex-1 flex flex-col min-h-0 p-6">
+      {title && (
+        <h1 className="text-xl font-medium text-gray-900 mb-4">
+          {title}
+        </h1>
+      )}
+      <div className={cn(
+        "bg-white rounded-lg border flex-1",
+        className
+      )}>
         {children}
       </div>
     </div>
