@@ -88,11 +88,16 @@ export default function Sidebar() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "flex items-center h-10 gap-3 px-3 rounded-md hover:bg-gray-100 transition-colors relative group overflow-hidden",
-                      isActive ? "text-primary bg-primary/5" : "text-gray-700 hover:text-primary",
+                      "flex items-center h-10 gap-3 px-3 rounded-md transition-colors relative group overflow-hidden",
+                      isActive 
+                        ? "text-gray-900 bg-gray-100 font-medium" 
+                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50",
                     )}
                   >
-                    <item.icon className="h-5 w-5 flex-shrink-0" />
+                    <item.icon className={cn(
+                      "h-5 w-5 flex-shrink-0",
+                      isActive ? "text-gray-900" : "text-gray-500"
+                    )} />
                     <span className={cn(
                       "transition-all duration-300 ease-in-out whitespace-nowrap text-sm",
                       isCollapsed ? "opacity-0 -translate-x-4" : "opacity-100 translate-x-0"

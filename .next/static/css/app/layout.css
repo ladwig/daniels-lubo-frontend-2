@@ -1066,6 +1066,11 @@ video {
   color: hsl(var(--primary));
 }
  
+.hover\:text-gray-900:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+}
+ 
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
