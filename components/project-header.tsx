@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
-import { Hash, MapPin, ExternalLink, Users } from 'lucide-react';
+import React, { useState } from 'react';
+import { Hash, MapPin, ExternalLink, Users, MessageSquare, Tag } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import ChatPanel from './chat-panel';
 
 // Add category to the interface
 interface ProjectInfo {
@@ -36,20 +37,10 @@ interface ProjectHeaderProps {
 }
 
 export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const projectInfo = getProjectInfo(projectId);
-
-  const getCategoryColor = (category: ProjectInfo['category']) => {
-    switch (category) {
-      case 'A':
-        return 'bg-red-50 text-red-700';
-      case 'B':
-        return 'bg-orange-50 text-orange-700';
-      case 'C':
-        return 'bg-yellow-50 text-yellow-700';
-      case 'D':
-        return 'bg-green-50 text-green-700';
-    }
-  };
+  // Mock unread messages count - this would come from your actual data
+  const unreadMessages = 3;
 
   const getCategoryTitle = (category: ProjectInfo['category']) => {
     switch (category) {
@@ -65,66 +56,83 @@ export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
   };
 
   return (
-    <div className="bg-white border-b">
-      <div className="px-6 py-3">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <h2 className="text-lg font-medium text-gray-900">
-              {projectInfo.customerName}
-            </h2>
-            <div className="flex items-center gap-4 text-sm text-gray-500">
-              <div className="flex items-center gap-1.5">
-                <Hash className="h-4 w-4" />
-                <span>{projectInfo.projectNumber}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <MapPin className="h-4 w-4" />
-                <span>{projectInfo.address}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Users className="h-4 w-4" />
-                <span>{projectInfo.partner}</span>
-              </div>
-              <div className="flex items-center gap-3 ml-2 text-sm">
-                <a
-                  href={projectInfo.businessCentralUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-0.5 text-gray-500 hover:text-primary transition-colors"
-                  title="Open in Business Central"
+    <>
+      <div className="bg-white border-b">
+        <div className="px-6 py-3">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <h2 className="text-lg font-medium text-gray-900">
+                {projectInfo.customerName}
+              </h2>
+              <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-1.5">
+                  <Hash className="h-4 w-4" />
+                  <span>{projectInfo.projectNumber}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="h-4 w-4" />
+                  <span>{projectInfo.address}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Users className="h-4 w-4" />
+                  <span>{projectInfo.partner}</span>
+                </div>
+                <div 
+                  className="flex items-center gap-1.5"
+                  title={getCategoryTitle(projectInfo.category)}
                 >
-                  <span>BC</span>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-                <a
-                  href={projectInfo.hubspotUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-0.5 text-gray-500 hover:text-primary transition-colors"
-                  title="Open in HubSpot"
-                >
-                  <span>HS</span>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
+                  <Tag className="h-4 w-4" />
+                  <span>{projectInfo.category}</span>
+                </div>
+                <div className="flex items-center gap-3 ml-2 text-sm">
+                  <a
+                    href={projectInfo.businessCentralUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-0.5 text-gray-500 hover:text-primary transition-colors"
+                    title="Open in Business Central"
+                  >
+                    <span>BC</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                  <a
+                    href={projectInfo.hubspotUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-0.5 text-gray-500 hover:text-primary transition-colors"
+                    title="Open in HubSpot"
+                  >
+                    <span>HS</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <span 
-              className={cn(
-                "px-2.5 py-0.5 text-xs font-medium rounded-full",
-                getCategoryColor(projectInfo.category)
-              )}
-              title={getCategoryTitle(projectInfo.category)}
-            >
-              Kategorie {projectInfo.category}
-            </span>
-            <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-primary/10 text-primary">
-              {projectInfo.status}
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-green-50 text-green-700">
+                {projectInfo.status}
+              </span>
+              <button
+                onClick={() => setIsChatOpen(true)}
+                className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors relative"
+                title="Projektkommunikation öffnen"
+              >
+                <MessageSquare className="h-5 w-5" />
+                {unreadMessages > 0 && (
+                  <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                    {unreadMessages}
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <ChatPanel 
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+      />
+    </>
   );
 } 

@@ -51,6 +51,16 @@
       "static/chunks/main-app.js",
       "static/chunks/app/management/layout.js"
     ],
+    "/projects/[id]/add-job/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/projects/[id]/add-job/layout.js"
+    ],
+    "/projects/[id]/add-job/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/projects/[id]/add-job/page.js"
+    ],
     "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

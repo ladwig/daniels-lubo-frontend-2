@@ -48,14 +48,23 @@ const navItems = [
   }
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  onCollapse?: (collapsed: boolean) => void;
+}
+
+export default function Sidebar({ onCollapse }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+    onCollapse?.(!isCollapsed);
+  };
 
   return (
     <aside 
       className={cn(
-        "bg-white border-r flex flex-col fixed h-screen",
+        "bg-white border-r flex flex-col fixed h-screen transition-all duration-300 ease-in-out",
         isCollapsed ? "w-20" : "w-64"
       )}
     >
@@ -120,7 +129,7 @@ export default function Sidebar() {
       {/* Collapse Toggle Button */}
       <div className="border-t p-3">
         <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
+          onClick={toggleCollapse}
           className="w-full flex justify-center p-2 rounded-md hover:bg-gray-100 text-gray-700 transition-colors group"
           title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >

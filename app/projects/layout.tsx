@@ -1,23 +1,29 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Bell, ChevronDown } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 import Breadcrumbs from "@/components/breadcrumbs";
 import GlobalSearch from "@/components/global-search";
+import { cn } from "@/lib/utils";
 
 export default function ProjectsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar onCollapse={setIsSidebarCollapsed} />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ml-64 bg-gray-50 min-h-screen">
+      <div className={cn(
+        "flex-1 flex flex-col bg-gray-50 min-h-screen transition-all duration-300 ease-in-out",
+        isSidebarCollapsed ? "ml-20" : "ml-64"
+      )}>
         {/* Fixed Header Section */}
         <div className="sticky top-0 z-30 bg-white">
           {/* Main Header */}
