@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Hash, MapPin, ExternalLink } from 'lucide-react';
+import { Hash, MapPin, ExternalLink, Users } from 'lucide-react';
 
 // This would typically come from an API
 const getProjectInfo = (projectId: string) => {
@@ -11,6 +11,7 @@ const getProjectInfo = (projectId: string) => {
     projectNumber: projectId,
     address: "Domkloster 4, 50667 Köln",
     status: "In Progress",
+    partner: "1komma5",
     businessCentralUrl: "https://businesscentral.dynamics.com/...",
     hubspotUrl: "https://app.hubspot.com/...",
   };
@@ -39,6 +40,10 @@ export default function ProjectHeader({ projectId }: ProjectHeaderProps) {
               <div className="flex items-center gap-1.5">
                 <MapPin className="h-4 w-4" />
                 <span>{projectInfo.address}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Users className="h-4 w-4" />
+                <span>{projectInfo.partner}</span>
               </div>
               <div className="flex items-center gap-3 ml-2 text-sm">
                 <a
