@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Bell, ChevronDown } from "lucide-react";
+import { Bell, ChevronDown, FileText, LogOut } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 import Breadcrumbs from "@/components/breadcrumbs";
 import GlobalSearch from "@/components/global-search";
+import Link from 'next/link';
 import { cn } from "@/lib/utils";
 
 export default function ProjectsLayout({
@@ -13,6 +14,7 @@ export default function ProjectsLayout({
   children: React.ReactNode;
 }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -61,10 +63,40 @@ export default function ProjectsLayout({
               <button className="p-2 hover:bg-gray-100 rounded-full">
                 <Bell className="h-5 w-5 text-gray-600" />
               </button>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-full" />
-                <span className="text-sm font-medium">Demo Account</span>
-                <ChevronDown className="h-4 w-4 text-gray-600" />
+              <div className="relative">
+                <button 
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <div className="w-8 h-8 bg-primary rounded-full" />
+                  <span className="text-sm font-medium">Demo Account</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 text-gray-600 transition-transform duration-200",
+                    isUserMenuOpen ? "rotate-180" : ""
+                  )} />
+                </button>
+
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg border shadow-lg py-1 z-50">
+                    <Link
+                      href="/api-docs"
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    >
+                      <FileText className="h-4 w-4" />
+                      API Dokumentation
+                    </Link>
+                    <button
+                      onClick={() => {
+                        // Handle logout
+                        console.log('Logout clicked');
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Abmelden
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </header>
