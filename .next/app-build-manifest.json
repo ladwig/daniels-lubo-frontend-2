@@ -11,6 +11,11 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/projects/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/projects/page.js"
+    ],
     "/projects/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -21,55 +26,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/projects/planning/page.js"
     ],
-    "/projects/page": [
+    "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/projects/page.js"
-    ],
-    "/projects/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/projects/[id]/page.js"
-    ],
-    "/projects/[id]/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/projects/[id]/layout.js"
-    ],
-    "/projects/documentation/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/projects/documentation/page.js"
-    ],
-    "/management/articles/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/management/articles/page.js"
-    ],
-    "/management/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/management/layout.js"
-    ],
-    "/projects/[id]/add-job/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/projects/[id]/add-job/layout.js"
-    ],
-    "/projects/[id]/add-job/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/projects/[id]/add-job/page.js"
-    ],
-    "/management/templates/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/management/templates/page.js"
-    ],
-    "/management/templates/new/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/management/templates/new/page.js"
+      "static/chunks/app/not-found.js"
     ]
   }
 }
