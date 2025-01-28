@@ -1,0 +1,3 @@
+export default function AddJobPage({ params }: { params: { projectId: string } }) {
+  // ... rest of the code ...
+} 

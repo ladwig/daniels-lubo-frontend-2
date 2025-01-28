@@ -12,14 +12,15 @@ import { cn } from "@/lib/utils";
 const LOCATIONS = ['Berlin', 'Hamburg', 'München', 'Frankfurt', 'Köln', 'Stuttgart', 'Düsseldorf', 'Dresden'];
 const SKILLS = ['Elektrik', 'Solar', 'HVAC', 'Wartung', 'Montage', 'Sanitär', 'Heizung', 'Klima'];
 
-// Mock data for employees with additional fields
+// Mock data for employees
 const employees = [
   { 
     id: 1, 
     name: 'Max Mustermann', 
     team: 'Team A', 
     location: 'Berlin', 
-    skills: ['Elektrik', 'Solar'], 
+    skills: ['Elektrik', 'Solar'],
+    role: 'fieldworker',
     isActive: true,
     lastLogin: new Date(2024, 3, 15, 8, 30),
     timeTrackedToday: '6h 30m',
@@ -29,7 +30,8 @@ const employees = [
     name: 'Anna Schmidt', 
     team: 'Team B', 
     location: 'Hamburg', 
-    skills: ['HVAC', 'Wartung'], 
+    skills: ['HVAC', 'Wartung'],
+    role: 'admin',
     isActive: true,
     lastLogin: new Date(2024, 3, 15, 9, 15),
     timeTrackedToday: '5h 45m',
@@ -39,7 +41,8 @@ const employees = [
     name: 'Tom Weber', 
     team: 'Team A', 
     location: 'München', 
-    skills: ['Solar', 'Montage'], 
+    skills: ['Solar', 'Montage'],
+    role: 'fieldworker',
     isActive: false,
     lastLogin: new Date(2024, 3, 14, 17, 0),
     timeTrackedToday: '0h 0m',
@@ -49,7 +52,8 @@ const employees = [
     name: 'Lisa Meyer', 
     team: 'Team C', 
     location: 'Berlin', 
-    skills: ['Elektrik', 'HVAC'], 
+    skills: ['Elektrik', 'HVAC'],
+    role: 'backoffice',
     isActive: true,
     lastLogin: new Date(2024, 3, 15, 7, 45),
     timeTrackedToday: '7h 15m',
@@ -59,7 +63,8 @@ const employees = [
     name: 'Jan Becker', 
     team: 'Team B', 
     location: 'Frankfurt', 
-    skills: ['Montage', 'Solar'], 
+    skills: ['Montage', 'Solar'],
+    role: 'fieldworker',
     isActive: true,
     lastLogin: new Date(2024, 3, 15, 8, 0),
     timeTrackedToday: '6h 45m',
@@ -69,7 +74,8 @@ const employees = [
     name: 'Markus Wagner', 
     team: 'Team B', 
     location: 'Köln', 
-    skills: ['Sanitär', 'Heizung'], 
+    skills: ['Sanitär', 'Heizung'],
+    role: 'fieldworker',
     isActive: true,
     lastLogin: new Date(2024, 3, 15, 8, 45),
     timeTrackedToday: '5h 15m',
@@ -79,7 +85,8 @@ const employees = [
     name: 'Nina Schulz', 
     team: 'Team C', 
     location: 'Stuttgart', 
-    skills: ['Klima', 'HVAC'], 
+    skills: ['Klima', 'HVAC'],
+    role: 'backoffice',
     isActive: true,
     lastLogin: new Date(2024, 3, 15, 7, 30),
     timeTrackedToday: '6h 45m',
@@ -89,7 +96,8 @@ const employees = [
     name: 'Sophie Weber', 
     team: 'Team A', 
     location: 'Dresden', 
-    skills: ['Elektrik', 'Montage'], 
+    skills: ['Elektrik', 'Montage'],
+    role: 'admin',
     isActive: true,
     lastLogin: new Date(2024, 3, 15, 8, 15),
     timeTrackedToday: '5h 30m',
@@ -237,6 +245,7 @@ export default function EmployeesPage() {
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Team</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Standort</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Skills</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rolle</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Letzter Login</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Zeit Heute</th>
@@ -265,6 +274,13 @@ export default function EmployeesPage() {
                               {skill}
                             </span>
                           ))}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className="text-sm text-gray-500">
+                          {employee.role === 'admin' && 'Admin'}
+                          {employee.role === 'fieldworker' && 'Außendienst'}
+                          {employee.role === 'backoffice' && 'Innendienst'}
                         </div>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
