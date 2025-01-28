@@ -3,7 +3,72 @@
 import React, { useState } from 'react';
 import PageContainer from '@/components/page-container';
 import { cn } from '@/lib/utils';
-import { List, Calendar, Map } from 'lucide-react';
+import { List, Calendar, Map, Plus } from 'lucide-react';
+import Link from 'next/link';
+
+// Mock data for jobs without appointments
+const jobsWithoutAppointments = [
+  {
+    id: 1,
+    projectId: "PM123-P48132",
+    customer: "Tech Demo GmbH",
+    jobType: "SHK",
+    status: "Pending",
+    location: "Berlin",
+    priority: "Hoch",
+    plannedStartWeek: 16,
+  },
+  {
+    id: 2,
+    projectId: "PM123-P48138",
+    customer: "Eco Systems GmbH",
+    jobType: "Abnahme",
+    status: "Pending",
+    location: "Hamburg",
+    priority: "Mittel",
+    plannedStartWeek: 17,
+  },
+  {
+    id: 3,
+    projectId: "PM123-P48134",
+    customer: "Beispiel AG",
+    jobType: "Installation",
+    status: "Pending",
+    location: "München",
+    priority: "Niedrig",
+    plannedStartWeek: 16,
+  },
+  {
+    id: 4,
+    projectId: "PM123-P48135",
+    customer: "Test GmbH",
+    jobType: "VOC",
+    status: "Pending",
+    location: "Berlin",
+    priority: "Hoch",
+    plannedStartWeek: 18,
+  },
+  {
+    id: 5,
+    projectId: "PM123-P48136",
+    customer: "Sample Corp",
+    jobType: "Elektro",
+    status: "Pending",
+    location: "Hamburg",
+    priority: "Mittel",
+    plannedStartWeek: 17,
+  },
+  {
+    id: 6,
+    projectId: "PM123-P48137",
+    customer: "Demo AG",
+    jobType: "SHK",
+    status: "Pending",
+    location: "München",
+    priority: "Hoch",
+    plannedStartWeek: 18,
+  }
+];
 
 // Mock data
 const projectAssignments = [
@@ -71,10 +136,10 @@ const employees = [
   { id: 2, name: "Anna Schmidt", location: "Hamburg", team: "Team B", trade: "Quality" },
 ];
 
-type ViewType = 'list' | 'resource' | 'map';
+type ViewType = 'open' | 'list' | 'resource' | 'map';
 
 export default function Planning() {
-  const [view, setView] = useState<ViewType>('list');
+  const [view, setView] = useState<ViewType>('open');
   const [locationFilter, setLocationFilter] = useState('');
   const [teamFilter, setTeamFilter] = useState('');
   const [tradeFilter, setTradeFilter] = useState('');
@@ -109,6 +174,23 @@ export default function Planning() {
         <div className="border-b bg-white">
           <div className="p-4 flex items-center justify-between">
             <div className="flex gap-2">
+              <button
+                onClick={() => setView('open')}
+                className={cn(
+                  "p-2 rounded-md flex items-center gap-2 text-sm font-medium",
+                  view === 'open' 
+                    ? "bg-gray-100 text-gray-900" 
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                )}
+              >
+                <Plus className="h-4 w-4" />
+                <span className="flex items-center gap-2">
+                  Offen
+                  <span className="px-1.5 py-0.5 text-xs font-medium rounded-full bg-gray-200 text-gray-900">
+                    {jobsWithoutAppointments.length}
+                  </span>
+                </span>
+              </button>
               <button
                 onClick={() => setView('list')}
                 className={cn(
@@ -181,6 +263,65 @@ export default function Planning() {
             </div>
           </div>
         </div>
+
+        {/* Open Jobs View */}
+        {view === 'open' && (
+          <div className="flex-1 overflow-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b bg-gray-50">
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Projekt</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Kunde</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Tätigkeit</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Standort</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Priorität</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Geplanter Start</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Aktion</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {jobsWithoutAppointments.map((job) => (
+                  <tr 
+                    key={job.id}
+                    className="hover:bg-gray-50"
+                  >
+                    <td className="py-3 px-4 text-sm text-gray-900">{job.projectId}</td>
+                    <td className="py-3 px-4 text-sm text-gray-900">{job.customer}</td>
+                    <td className="py-3 px-4 text-sm text-gray-600">{job.jobType}</td>
+                    <td className="py-3 px-4 text-sm text-gray-600">{job.location}</td>
+                    <td className="py-3 px-4">
+                      <span className={cn(
+                        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+                        job.priority === "Hoch" ? "bg-red-50 text-red-700" :
+                        job.priority === "Mittel" ? "bg-yellow-50 text-yellow-700" :
+                        "bg-green-50 text-green-700"
+                      )}>
+                        {job.priority}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-50 text-yellow-700">
+                        {job.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-sm text-gray-600">
+                      KW {job.plannedStartWeek}
+                    </td>
+                    <td className="py-3 px-4">
+                      <Link
+                        href={`/projects/planning/new?job=${job.id}&week=${job.plannedStartWeek}`}
+                        className="inline-flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                      >
+                        Termin planen
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         {/* List View */}
         {view === 'list' && (
