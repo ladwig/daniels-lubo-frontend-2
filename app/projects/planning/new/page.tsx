@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProjectHeader from '@/components/project-header';
 import { cn } from '@/lib/utils';
@@ -48,7 +48,7 @@ const TIME_OPTIONS = [
   '16:00', '16:30', '17:00', '17:30', '18:00'
 ];
 
-export default function NewAppointmentPage() {
+function NewAppointmentContent() {
   const searchParams = useSearchParams();
   const jobId = searchParams.get('job') || '';
   const defaultWeek = parseInt(searchParams.get('week') || '0');
@@ -344,5 +344,19 @@ export default function NewAppointmentPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function NewAppointmentPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex-1 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-500">Laden...</p>
+        </div>
+      </div>
+    }>
+      <NewAppointmentContent />
+    </Suspense>
   );
 } 
