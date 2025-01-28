@@ -329,13 +329,13 @@ export default function NewAppointmentPage() {
             <button
               type="button"
               onClick={() => window.history.back()}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="px-3 py-2 text-sm font-medium text-gray-900 bg-white border rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/20"
             >
               Abbrechen
             </button>
             <button
               type="button"
-              className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="px-3 py-2 text-sm font-medium text-gray-900 bg-primary border-primary rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={selectedEmployees.length === 0 || selectedDates.length === 0 || startTime === TIME_OPTIONS[0] || endTime === TIME_OPTIONS[0]}
             >
               Termin speichern

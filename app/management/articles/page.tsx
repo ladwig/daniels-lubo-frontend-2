@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Tags, RefreshCw } from 'lucide-react';
-import PageContainer from '@/components/page-container';
+import { Search, Tags, RefreshCw, Bell, ChevronDown } from 'lucide-react';
+import Sidebar from "@/components/sidebar";
+import Breadcrumbs from "@/components/breadcrumbs";
+import GlobalSearch from "@/components/global-search";
 import { cn } from '@/lib/utils';
 
 // Mock data
@@ -253,6 +255,7 @@ const articles: Article[] = [
 ];
 
 export default function Articles() {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const lastSync = new Date().toLocaleString('de-DE');
@@ -270,103 +273,143 @@ export default function Articles() {
   });
 
   return (
-    <PageContainer>
-      {/* Header with Search and Filters */}
-      <div className="p-4 border-b">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4 flex-1">
-            {/* Search */}
-            <div className="flex items-center gap-2 bg-white rounded-md border px-3 py-1.5 flex-1 max-w-md">
-              <Search className="h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Suche nach Name, Kurzname oder ERP-ID..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-1 text-sm outline-none"
-              />
-            </div>
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <Sidebar onCollapse={setIsSidebarCollapsed} />
 
-            {/* Tag Filter */}
-            <div className="flex items-center gap-2">
-              <Tags className="h-4 w-4 text-gray-400" />
-              <div className="flex flex-wrap gap-1">
-                {TAGS.map(tag => (
-                  <button
-                    key={tag}
-                    onClick={() => {
-                      setSelectedTags(prev => 
-                        prev.includes(tag) 
-                          ? prev.filter(t => t !== tag)
-                          : [...prev, tag]
-                      );
-                    }}
-                    className={cn(
-                      "px-2 py-1 text-xs font-medium rounded-full transition-colors",
-                      selectedTags.includes(tag)
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                    )}
-                  >
-                    {tag}
-                  </button>
-                ))}
+      {/* Main Content */}
+      <div className={cn(
+        "flex-1 flex flex-col bg-gray-50 min-h-screen transition-all duration-300 ease-in-out",
+        isSidebarCollapsed ? "ml-20" : "ml-64"
+      )}>
+        {/* Fixed Header Section */}
+        <div className="sticky top-0 z-30 bg-white">
+          {/* Main Header */}
+          <header className="h-16 border-b flex items-center justify-between px-6">
+            <div className="flex-1 flex items-center">
+              <GlobalSearch />
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <button className="p-2 hover:bg-gray-100 rounded-full">
+                <Bell className="h-5 w-5 text-gray-600" />
+              </button>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-primary rounded-full" />
+                <span className="text-sm font-medium">Demo Account</span>
+                <ChevronDown className="h-4 w-4 text-gray-600" />
+              </div>
+            </div>
+          </header>
+
+          {/* Breadcrumbs */}
+          <div className="px-6 py-2 border-b bg-gray-50">
+            <Breadcrumbs />
+          </div>
+        </div>
+
+        {/* Page Content */}
+        <div className="flex-1 p-6">
+          {/* Header with Search and Filters */}
+          <div className="bg-white border rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-4 flex-1">
+                {/* Search */}
+                <div className="flex items-center gap-2 bg-white rounded-md border px-3 py-1.5 flex-1 max-w-md">
+                  <Search className="h-4 w-4 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Suche nach Name, Kurzname oder ERP-ID..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="flex-1 text-sm outline-none"
+                  />
+                </div>
+
+                {/* Tag Filter */}
+                <div className="flex items-center gap-2">
+                  <Tags className="h-4 w-4 text-gray-400" />
+                  <div className="flex flex-wrap gap-1">
+                    {TAGS.map(tag => (
+                      <button
+                        key={tag}
+                        onClick={() => {
+                          setSelectedTags(prev => 
+                            prev.includes(tag) 
+                              ? prev.filter(t => t !== tag)
+                              : [...prev, tag]
+                          );
+                        }}
+                        className={cn(
+                          "px-2 py-1 text-xs font-medium rounded-full transition-colors",
+                          selectedTags.includes(tag)
+                            ? "bg-primary text-gray-900"
+                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        )}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Last Sync Info */}
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <RefreshCw className="h-4 w-4" />
+                <span>Letzte Synchronisierung: {lastSync}</span>
               </div>
             </div>
           </div>
 
-          {/* Last Sync Info */}
-          <div className="flex items-center gap-2 text-sm text-gray-500">
-            <RefreshCw className="h-4 w-4" />
-            <span>Letzte Synchronisierung: {lastSync}</span>
+          {/* Articles Table */}
+          <div className="bg-white border rounded-lg">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b bg-gray-50">
+                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[120px]">ERP-ID</th>
+                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[140px]">GTIN</th>
+                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">Bild</th>
+                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[200px]">Kurzname</th>
+                    <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Tags</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {filteredArticles.map((article) => (
+                    <tr key={article.id} className="hover:bg-gray-50">
+                      <td className="py-3 px-4 text-sm text-gray-600">{article.erpId}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600">{article.gtin}</td>
+                      <td className="py-3 px-4">
+                        <div className="w-12 h-12 bg-gray-100 rounded-md border flex items-center justify-center text-gray-400 text-xs">
+                          Bild
+                        </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="text-sm font-medium text-gray-900">{article.name}</div>
+                      </td>
+                      <td className="py-3 px-4 text-sm text-gray-600">{article.shortName}</td>
+                      <td className="py-3 px-4">
+                        <div className="flex flex-wrap gap-1">
+                          {article.tags.map(tag => (
+                            <span
+                              key={tag}
+                              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Articles Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b bg-gray-50">
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[120px]">ERP-ID</th>
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[140px]">GTIN</th>
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px]">Bild</th>
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider w-[200px]">Kurzname</th>
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Tags</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {filteredArticles.map((article) => (
-              <tr key={article.id} className="hover:bg-gray-50">
-                <td className="py-3 px-4 text-sm text-gray-600">{article.erpId}</td>
-                <td className="py-3 px-4 text-sm text-gray-600">{article.gtin}</td>
-                <td className="py-3 px-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-md border flex items-center justify-center text-gray-400 text-xs">
-                    Bild
-                  </div>
-                </td>
-                <td className="py-3 px-4">
-                  <div className="text-sm font-medium text-gray-900">{article.name}</div>
-                </td>
-                <td className="py-3 px-4 text-sm text-gray-600">{article.shortName}</td>
-                <td className="py-3 px-4">
-                  <div className="flex flex-wrap gap-1">
-                    {article.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </PageContainer>
+    </div>
   );
 } 
