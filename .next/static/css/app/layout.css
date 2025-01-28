@@ -937,6 +937,9 @@ video {
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
 .flex-col {
   flex-direction: column;
 }
@@ -1098,6 +1101,10 @@ video {
 }
 .border-primary\/20 {
   border-color: hsl(var(--primary) / 0.2);
+}
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
 }
 .border-x-transparent {
   border-left-color: transparent;
